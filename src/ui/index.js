@@ -4,7 +4,7 @@ const { Text, Box } = require('ink')
 const getData = require('../api')
 
 const App = ({ name = 'Stranger' }) => {
-	const [data, setData] = React.useState(null);
+	const [data, setData] = React.useState({});
 	React.useEffect(() => {
     const fetchData = async () => {
       const result = await getData()
@@ -15,11 +15,15 @@ const App = ({ name = 'Stranger' }) => {
 	return (
 		<>
 		<Text>
-			Hello, <Text color="green">{name}</Text>
+			Hello, <Text color='green'>{name}</Text>
 		</Text>
-		<Text color='red'>
-			{data && data.qod ? JSON.stringify(data.qod[0].author) : ''}
-		</Text>
+		{data.qod && (
+			<Box borderStyle='round' borderColor='green'>
+				<Text color='white'>
+					"{data.qod[0].quote}" - <Text color="blue">{data.qod[0].author}</Text>
+				</Text>
+			</Box>
+		)}
 		</>
 	)
 };
