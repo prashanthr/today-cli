@@ -1,7 +1,8 @@
 'use strict'
 const React = require('react')
-const { Text, Box } = require('ink')
+const importJsx = require('import-jsx')
 const getData = require('../api')
+const Layout = importJsx('./layout')
 
 const App = ({ name = 'Stranger' }) => {
 	const [data, setData] = React.useState({});
@@ -11,21 +12,10 @@ const App = ({ name = 'Stranger' }) => {
       setData(result);
     };
     fetchData();
-  }, []);
+  }, [])
 	return (
-		<>
-		<Text>
-			Hello, <Text color='green'>{name}</Text>
-		</Text>
-		{data.qod && (
-			<Box borderStyle='round' borderColor='green'>
-				<Text color='white'>
-					"{data.qod[0].quote}" - <Text color="blue">{data.qod[0].author}</Text>
-				</Text>
-			</Box>
-		)}
-		</>
+		<Layout data={data} />
 	)
-};
+}
 
-module.exports = App;
+module.exports = App
