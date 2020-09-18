@@ -6,6 +6,10 @@ const fs = require('fs')
 const weatherIconFolder = '/tmp/today'
 const weatherIconPath = `${weatherIconFolder}/weather.png`
 
+const initialState = {
+	name: getEnv('USER', 'Stranger')
+}
+
 const getDataUrl = () => {
 	const baseUrl = isProd()
 		? getEnv('TODAY_API_HOST')
@@ -54,6 +58,7 @@ const getData = async () => {
 
 const adaptDataForClient = (data) => {
 	const finalData = {
+		...initialState,
 		...data,
 		qod: get(data, 'qod[0]', {}),
 		wod: {
@@ -68,4 +73,4 @@ const adaptDataForClient = (data) => {
 	return finalData
 }
 
-module.exports = getData
+module.exports = { initialState, getData }
