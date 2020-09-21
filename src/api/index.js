@@ -14,7 +14,7 @@ const getDataUrl = () => {
 	const baseUrl = isProd()
 		? getEnv('TODAY_API_HOST')
 		: `http://${getEnv('TODAY_API_HOST')}:${getEnv('TODAY_API_PORT')}`
-	return `${baseUrl}/today?hod_limit=1&nod_limit=1`
+	return `${baseUrl}/today?hod_limit=3&nod_limit=5`
 }
 
 const downloadFile = async (url, path) => {
