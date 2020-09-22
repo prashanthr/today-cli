@@ -25,17 +25,16 @@ const HistoryItems = ({ items, title }) => {
 }
 
 const History = ({ data }) => {
-	const { data: { Births = [], Deaths = [], Events = [] }, url = '' } = data
 	return (
 		<>
 			{data && (
 				<>
-					<LinkItem title={<Heading text={'On this day'} />} url={url} />
-					<HistoryItems items={Events} title={'Events'} />
+					<LinkItem title={<Heading text={'On this day'} />} url={data.url} />
+					<HistoryItems items={data.data.Events} title={'Events'} />
 					<Text>{'\n'}</Text>
-					<HistoryItems items={Births} title={'Births'} />
+					<HistoryItems items={data.data.Births} title={'Births'} />
 					<Text>{'\n'}</Text>
-					<HistoryItems items={Deaths} title={'Deaths'} />
+					<HistoryItems items={data.data.Deaths} title={'Deaths'} />
 				</>
 			)}
 		</>
@@ -43,15 +42,6 @@ const History = ({ data }) => {
 }
 
 History.defaultProps = {
-	data: {
-		date: '',
-		url: '',
-		data: {
-			Events: [],
-			Deaths: [],
-			Births: []
-		}
-	}
 }
 
 

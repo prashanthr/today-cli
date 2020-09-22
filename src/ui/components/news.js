@@ -8,7 +8,7 @@ const LinkItem = importJsx('./link-item')
 
 const News = ({ data }) => (
 	<>
-		{data.articles && (
+		{data && data.articles && (
 			<>
 				<Heading text={`Today's Headlines`} />
 				{data.articles.map((article, idx) => (
@@ -24,9 +24,6 @@ const News = ({ data }) => (
 )
 
 News.defaultProps = {
-	data: {
-		articles: []
-	}
 }
 
 
