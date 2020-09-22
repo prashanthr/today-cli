@@ -10,7 +10,7 @@ const Weather = ({ data }) => {
 			{!isEmpty(data) && (
 				<>
 				<Text color='white'>
-						Today's foecast (for <Text bold color='blue'>{name},{sys.country}</Text>):&nbsp;
+						Today's foecast (for <Text bold color='blue'>{name}, {sys.country}</Text>):&nbsp;
 						{'\n'}
 						<Text bold color='green'>
 							{weather[0].description}&nbsp;
