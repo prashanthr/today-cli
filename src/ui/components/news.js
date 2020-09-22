@@ -1,26 +1,22 @@
 'use strict'
 const React = require('react')
 const { Text, Newline } = require('ink')
+const importJsx = require('import-jsx')
+const Heading = importJsx('./heading')
 const Link = require('ink-link')
+const LinkItem = importJsx('./link-item')
 
 const News = ({ data }) => (
 	<>
 		{data.articles && (
 			<>
-				<Text bold underline>Today's Headlines</Text>
+				<Heading text={`Today's Headlines`} />
 				{data.articles.map((article, idx) => (
-					<React.Fragment key={idx}>
-						<Text>
-							{article.title}&nbsp;
-							<Text>
-								[
-									<Link url={article.url}>
-										<Text color='blue'>Link</Text>
-									</Link>
-								]
-							</Text>
-						</Text>
-					</React.Fragment>
+					<LinkItem
+						key={idx}
+						title={article.title}
+						url={article.url}
+					/>
 				))}
 			</>
 		)}

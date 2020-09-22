@@ -10,11 +10,12 @@ const initialState = {
 	name: getEnv('USER', 'Stranger')
 }
 
-const getDataUrl = () => {
+const getDataUrl = (params = {}) => {
+	const { wod_unit = 'imperial', hod_limit = 3, nod_limit = 5 } = params
 	const baseUrl = isProd()
 		? getEnv('TODAY_API_HOST')
 		: `http://${getEnv('TODAY_API_HOST')}:${getEnv('TODAY_API_PORT')}`
-	return `${baseUrl}/today?hod_limit=3&nod_limit=5`
+	return `${baseUrl}/today?wod_unit=${wod_unit}&hod_limit=${hod_limit}&nod_limit=${nod_limit}`
 }
 
 const downloadFile = async (url, path) => {

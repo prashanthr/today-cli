@@ -1,18 +1,26 @@
 'use strict'
 const React = require('react')
+const PropTypes = require('prop-types')
 const { Text, Box } = require('ink')
 
-const Quote = ({ quote }) => (
+const Quote = ({ data }) => (
 	<>
-		{quote && (
+		{data && (
 			<Box borderStyle='round' borderColor='green'>
 				<Text color='white'>
-					"{quote.quote}" - <Text color="blue">{quote.author}</Text>
+					"{data.quote}" - <Text color="blue">{data.author}</Text>
 				</Text>
 			</Box>
 		)}
 	</>
 )
+
+Quote.propTypes = {
+	data: PropTypes.shape({
+		quote: PropTypes.string,
+		author: PropTypes.string
+	})
+}
 
 
 module.exports = Quote

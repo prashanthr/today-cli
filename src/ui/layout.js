@@ -6,19 +6,25 @@ const Intro = importJsx('./components/intro')
 const Weather = importJsx('./components/weather')
 const Quote = importJsx('./components/quote')
 const News = importJsx('./components/news')
+const History = importJsx('./components/history')
 
 const Layout = ({ data }) => {
 	const { qod, name } = data
+	const components = [
+		<Intro name={data.name} />,
+		<Weather data={data.wod} />,
+		<News data={data.nod} />,
+		<History data={data.hod} />,
+		<Quote data={data.qod} />
+	]
 	return (
 		<>
-			<Intro name={data.name} />
-			<Newline />
-			<Weather data={data.wod} />
-			<Newline />
-			<News data={data.nod} />
-			<Newline />
-			<Quote quote={data.qod} />
-			<Newline />
+			{components.map((component, idx) => (
+				<React.Fragment key={idx}>
+					{component}
+					<Newline />
+				</React.Fragment>
+			))}
 		</>
 	)
 }

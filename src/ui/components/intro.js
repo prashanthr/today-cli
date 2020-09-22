@@ -2,13 +2,14 @@
 const React = require('react')
 const { Text, Newline } = require('ink')
 const { toHumanReadableDate } = require('../../util/date')
+const { capitalizeText } = require('../../util/text')
 
 const Intro = ({ name }) => (
 	<>
 		{name && (
 			<>
 				<Text>
-						Hello, <Text color='blue'>{name}</Text> 👋
+						Hello, <Text color='blue'>{capitalizeText(name)}</Text> 👋
 						{'\n'}
 				</Text>
 				<Text color='white'>
