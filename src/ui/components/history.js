@@ -10,7 +10,7 @@ const LinkItem = require('./link-item')
 const HistoryItems = ({ items, title }) => {
 	return (
 		<>
-			<Text backgroundColor='green'>
+			<Text inverse color='green'>
 				{title}
 			</Text>
 			{items.map((item, idx) => (
@@ -36,7 +36,6 @@ const History = ({ data }) => {
 					<HistoryItems items={Births} title={'Births'} />
 					<Text>{'\n'}</Text>
 					<HistoryItems items={Deaths} title={'Deaths'} />
-					<Text>{'\n'}</Text>
 				</>
 			)}
 		</>

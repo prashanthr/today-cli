@@ -9,11 +9,11 @@ const Intro = ({ name }) => (
 		{name && (
 			<>
 				<Text>
-						Hello, <Text color='blue'>{capitalizeText(name)}</Text> 👋
+						Hello, <Text bold color='blue'>{capitalizeText(name)}</Text> 👋
 						{'\n'}
 				</Text>
 				<Text color='white'>
-					Today is <Text color='blue'>{toHumanReadableDate(new Date())}</Text>
+					Today is <Text bold color='blue'>{toHumanReadableDate(new Date())}</Text>
 				</Text>
 			</>
 		)}

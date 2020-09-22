@@ -14,7 +14,7 @@ const News = ({ data }) => (
 				{data.articles.map((article, idx) => (
 					<LinkItem
 						key={idx}
-						title={article.title}
+						title={`- ${article.title}`}
 						url={article.url}
 					/>
 				))}
