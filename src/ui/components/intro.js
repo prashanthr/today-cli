@@ -1,6 +1,6 @@
 'use strict'
 const React = require('react')
-const { Text, Newline } = require('ink')
+const { Text, Newline, Static } = require('ink')
 const { toHumanReadableDate } = require('../../util/date')
 const { capitalizeText } = require('../../util/text')
 
@@ -24,5 +24,12 @@ Intro.defaultProps = {
 	name: 'Stranger'
 }
 
+const StaticIntro = ({ data }) => (
+	<Static items={[data]}>
+		{(item, idx) => (
+			<Intro key={idx} name={item.name} />
+		)}
+	</Static>
+)
 
-module.exports = Intro
+module.exports = StaticIntro

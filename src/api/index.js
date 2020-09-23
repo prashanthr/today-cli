@@ -7,7 +7,8 @@ const weatherIconFolder = '/tmp/today'
 const weatherIconPath = `${weatherIconFolder}/weather.png`
 
 const initialState = {
-	name: getEnv('USER', 'Stranger')
+	name: getEnv('USER', 'Stranger'),
+	isLoading: true
 }
 
 const getDataUrl = (params = {}) => {
@@ -61,6 +62,7 @@ const adaptDataForClient = (data) => {
 	const finalData = {
 		...initialState,
 		...data,
+		isLoading: false,
 		qod: get(data, 'qod[0]', {}),
 		wod: {
 			...data.wod,

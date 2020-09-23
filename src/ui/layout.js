@@ -7,11 +7,13 @@ const Weather = importJsx('./components/weather')
 const Quote = importJsx('./components/quote')
 const News = importJsx('./components/news')
 const History = importJsx('./components/history')
+const Loader = importJsx('./components/loader')
 
 const Layout = ({ data }) => {
 	const { qod, name } = data
 	const components = [
-		<Intro name={data.name} />,
+		<Intro data={data} />,
+		...(data.isLoading ? [<Loader />] : []),
 		<Weather data={data.wod} />,
 		<News data={data.nod} />,
 		<History data={data.hod} />,
