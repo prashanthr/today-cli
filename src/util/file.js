@@ -20,7 +20,7 @@ const readFromFile = async (path, json = false) => {
 }
 
 const writeToFile = async (data, path) => {
-	await fs.writeFile(path, typeof data === 'string' ? data : JSON.stringify(data))
+	await fs.writeFile(path, typeof data === 'string' ? data : JSON.stringify(data, null, 2))
 }
 
 module.exports = { writeToFile, readFromFile, getHomeFilePath, CONFIG_FILE_NAME }
