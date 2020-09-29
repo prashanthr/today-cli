@@ -2,21 +2,32 @@ const axios = require('axios')
 const { get } = require('lodash')
 const { isProd, getEnv } = require('../util/env')
 const fs = require('fs')
+const { getLocationFromIp } = require('../util/location')
 
 const weatherIconFolder = '/tmp/today'
 const weatherIconPath = `${weatherIconFolder}/weather.png`
 
+const getUserName = () => getEnv('USER', 'Stranger')
+
 const initialState = {
-	name: getEnv('USER', 'Stranger'),
+	name: getUserName(),
 	isLoading: true
 }
 
-const getDataUrl = (params = {}) => {
-	const { wod_unit = 'imperial', hod_limit = 3, nod_limit = 5 } = params
+const buildInitialState = (data) => {
+	return {
+		...data,
+		...initialState
+	}
+}
+
+const getDataUrl = async (params = {}) => {
+	const { weatherUnit, historyLimit, newsLimit, country } = params
+	const location = await getLocationFromIp() || params.location
 	const baseUrl = isProd()
 		? getEnv('TODAY_API_HOST')
 		: `http://${getEnv('TODAY_API_HOST')}:${getEnv('TODAY_API_PORT')}`
-	return `${baseUrl}/today?wod_unit=${wod_unit}&hod_limit=${hod_limit}&nod_limit=${nod_limit}`
+	return `${baseUrl}/today?location=${encodeURIComponent(location)}&country=${country}&wod_unit=${weatherUnit}&hod_limit=${historyLimit}&nod_limit=${newsLimit}`
 }
 
 const downloadFile = async (url, path) => {
@@ -43,24 +54,24 @@ const downloadFile = async (url, path) => {
 
 }
 
-const getData = async () => {
+const getData = async (params) => {
 	try {
-		const res = await axios.get(getDataUrl())
+		const res = await axios.get(await getDataUrl(params))
 		const weatherIcon = get(res.data, 'wod.weather[0].icon', undefined)
 		if (weatherIcon) {
 			await downloadFile(weatherIcon, weatherIconPath)
 		}
 		// console.log('res', res, res.data)
-		return adaptDataForClient(res.data)
+		return adaptDataForClient({ initData: params, data: res.data })
 	} catch (err) {
 		console.error('Error fetching data', err)
 		return {}
 	}
 }
 
-const adaptDataForClient = (data) => {
+const adaptDataForClient = ({ initData, data }) => {
 	const finalData = {
-		...initialState,
+		...buildInitialState(initData),
 		...data,
 		isLoading: false,
 		qod: get(data, 'qod[0]', {}),
@@ -76,4 +87,4 @@ const adaptDataForClient = (data) => {
 	return finalData
 }
 
-module.exports = { initialState, getData }
+module.exports = { buildInitialState, getData, getUserName }

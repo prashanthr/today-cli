@@ -1,7 +1,7 @@
 'use strict'
 const React = require('react')
 const { Text, Newline, Static } = require('ink')
-const { toHumanReadableDate } = require('../../util/date')
+const { toHumanReadableDate } = require('../../util/datetime')
 const { capitalizeText } = require('../../util/text')
 
 const Intro = ({ name }) => (

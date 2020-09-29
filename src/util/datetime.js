@@ -9,4 +9,6 @@ const toHumanReadableDate = (
  	return new Intl.DateTimeFormat('en-US', options).format(date)
 }
 
-module.exports = { toHumanReadableDate }
+const getTimeZone = () => Intl.DateTimeFormat().resolvedOptions().timeZone
+
+module.exports = { toHumanReadableDate, getTimeZone }

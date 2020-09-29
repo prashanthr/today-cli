@@ -3,7 +3,7 @@ const React = require('react')
 const { Text, Newline } = require('ink')
 const importJsx = require('import-jsx')
 const Heading = importJsx('./heading')
-const { toHumanReadableDate } = require('../../util/date')
+const { toHumanReadableDate } = require('../../util/datetime')
 const { capitalizeText } = require('../../util/text')
 const LinkItem = require('./link-item')
 
