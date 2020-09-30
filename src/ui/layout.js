@@ -8,6 +8,7 @@ const Quote = importJsx('./components/quote')
 const News = importJsx('./components/news')
 const History = importJsx('./components/history')
 const Loader = importJsx('./components/loader')
+const Footer = importJsx('./components/footer')
 
 const Layout = ({ data }) => {
 	const { qod, name } = data
@@ -17,7 +18,8 @@ const Layout = ({ data }) => {
 		<Weather data={data.wod} />,
 		<News data={data.nod} />,
 		<History data={data.hod} />,
-		<Quote data={data.qod} />
+		<Quote data={data.qod} />,
+		<Footer />
 	]
 	return (
 		<>

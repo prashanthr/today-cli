@@ -38,11 +38,6 @@ const flags = {
 		default: 5,
 		isRequired: false
 	},
-	isOnboarded: {
-		type: 'boolean',
-		alias: 'o',
-		default: false
-	}
 }
 
 module.exports = flags
