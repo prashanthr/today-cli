@@ -10,7 +10,7 @@ const getHomeFilePath = (fileName) => {
 
 const readFromFile = async (path, json = false) => {
 	try {
-		const contents = await fs.readFile(path);
+		const contents = await fs.readFile(path, 'utf-8')
 		return json
 			? JSON.parse(contents)
 			: contents

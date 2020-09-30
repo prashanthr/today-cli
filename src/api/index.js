@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { get } = require('lodash')
+const { get, isNil } = require('lodash')
 const { isProd, getEnv } = require('../util/env')
 const { CONFIG_FILE_NAME, getHomeFilePath, writeToFile, readFromFile } = require('../util/file')
 const { getLocationFromIp } = require('../util/location')
@@ -21,7 +21,7 @@ const buildInitialState = (data) => {
 	}
 }
 
-const getDataUrl = (params = {}) => {
+const getDataUrl = (params) => {
 	const { weatherUnit, historyLimit, newsLimit, country, location } = params
 	const baseUrl = isProd()
 		? getEnv('TODAY_API_HOST')
@@ -32,8 +32,10 @@ const getDataUrl = (params = {}) => {
 const getData = async (params) => {
 	try {
 		const configFilePath = getHomeFilePath(CONFIG_FILE_NAME)
-		const readParams = await readFromFile(configFilePath)
-		const resolvedParams = readParams || {
+		const readParams = await readFromFile(configFilePath, true)
+		const resolvedParams = !isNil(readParams)
+		? readParams
+		: {
 			...params,
 			location: await getLocationFromIp() || params.location
 		}
@@ -60,7 +62,6 @@ const adaptDataForClient = ({ initData, data }) => {
 			}]
 		}
 	}
-	// console.log('finalData', JSON.stringify(finalData), finalData.wod.weather[0].icon)
 	return finalData
 }
 
