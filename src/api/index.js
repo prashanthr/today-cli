@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { get, isNil } = require('lodash')
+const { get, isNil, omit } = require('lodash')
 const { isProd, getEnv } = require('../util/env')
 const { CONFIG_FILE_NAME, getHomeFilePath, writeToFile, readFromFile } = require('../util/file')
 const { getLocationFromIp } = require('../util/location')
@@ -33,12 +33,12 @@ const getData = async (params) => {
 	try {
 		const configFilePath = getHomeFilePath(CONFIG_FILE_NAME)
 		const readParams = await readFromFile(configFilePath, true)
-		const resolvedParams = !isNil(readParams)
-		? readParams
-		: {
-			...params,
-			location: await getLocationFromIp() || params.location
-		}
+		const resolvedParams = isNil(readParams) || params.reset
+		? {
+				...omit(params, 'reset'),
+				location: await getLocationFromIp() || params.location
+			}
+		: readParams
 		const res = await axios.get(getDataUrl(resolvedParams))
 		await writeToFile(resolvedParams, configFilePath)
 		return adaptDataForClient({ initData: resolvedParams, data: res.data })

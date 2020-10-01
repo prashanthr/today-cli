@@ -15,11 +15,11 @@ const Layout = ({ data }) => {
 	const components = [
 		<Intro data={data} />,
 		...(data.isLoading ? [<Loader />] : []),
-		<Weather data={data.wod} />,
-		<News data={data.nod} />,
-		<History data={data.hod} />,
-		<Quote data={data.qod} />,
-		<Footer />
+		...(data.showWeather ? [<Weather data={data.wod} />] : []),
+		...(data.showNews ? [<News data={data.nod} />] : []),
+		...(data.showHistory ? [<History data={data.hod} />] : []),
+		...(data.showQuote ? [<Quote data={data.qod} />] : []),
+		...(data.isLoading ? [] : [<Footer />])
 	]
 	return (
 		<>

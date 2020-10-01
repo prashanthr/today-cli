@@ -20,6 +20,30 @@ const flags = {
 		default: getCountry(),
 		isRequired: true,
 	},
+	showWeather: {
+		type: 'boolean',
+		alias: 'w',
+		default: true,
+		isRequired: false
+	},
+	showNews: {
+		type: 'boolean',
+		alias: 'n',
+		default: true,
+		isRequired: false
+	},
+	showHistory: {
+		type: 'boolean',
+		alias: 'h',
+		default: true,
+		isRequired: false
+	},
+	showQuote: {
+		type: 'boolean',
+		alias: 'q',
+		default: true,
+		isRequired: false
+	},
 	weatherUnit: {
 		type: 'string',
 		alias: 'wu',
@@ -38,6 +62,12 @@ const flags = {
 		default: 5,
 		isRequired: false
 	},
+	reset: {
+		type: 'boolean',
+		alias: 'r',
+		default: false,
+		isRequired: false
+	}
 }
 
 module.exports = flags
