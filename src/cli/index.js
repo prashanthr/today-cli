@@ -4,8 +4,8 @@ const React = require('react')
 const importJsx = require('import-jsx')
 const {render} = require('ink')
 const meow = require('meow')
-const flags = require('./flags')
-const { mapValues } = require('lodash')
+const { flags, EXAMPLES } = require('./flags')
+const { values } = require('lodash')
 
 const ui = importJsx('../ui')
 
@@ -14,11 +14,10 @@ const cli = meow(`
 	  $ today
 
 	Options
-		--name  Your name
+		${values(flags).map(flag => flag.helpText).join('\n       ')}
 
 	Examples
-	  $ today --name=Jane
-	  Hello, Jane
+		${EXAMPLES}
 `, { flags })
 
 render(React.createElement(ui, cli.flags))
