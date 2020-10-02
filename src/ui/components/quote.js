@@ -3,12 +3,12 @@ const React = require('react')
 const PropTypes = require('prop-types')
 const { Text, Box } = require('ink')
 
-const Quote = ({ data }) => (
+const Quote = ({ data, colors }) => (
 	<>
 		{data && (
-			<Box borderStyle='round' borderColor='green'>
-				<Text color='white'>
-					"{data.quote}" - <Text color="blue">{data.author}</Text>
+			<Box borderStyle='round' borderColor={colors.tertiary}>
+				<Text color={colors.primary}>
+					"{data.quote}" - <Text color={colors.secondary}>{data.author}</Text>
 				</Text>
 			</Box>
 		)}

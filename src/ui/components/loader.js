@@ -8,11 +8,11 @@ const ALL_SPINNER_TYPES = [
 	"dots", "dots2", "dots3", "dots4", "dots5", "dots6", "dots7", "dots8", "dots9", "dots10", "dots11", "dots12", "dots8Bit", "line", "line2", "pipe", "simpleDots", "simpleDotsScrolling", "star", "star2", "flip", "hamburger", "growVertical", "growHorizontal", "balloon", "balloon2", "noise", "bounce", "boxBounce", "boxBounce2", "triangle", "arc", "circle", "squareCorners", "circleQuarters", "circleHalves", "squish", "toggle", "toggle2", "toggle3", "toggle4", "toggle5", "toggle6", "toggle7", "toggle8", "toggle9", "toggle10", "toggle11", "toggle12", "toggle13", "arrow", "arrow2", "arrow3", "bouncingBar", "bouncingBall", "smiley", "monkey", "hearts", "clock", "earth", "material", "moon", "runner", "pong", "shark", "dqpb", "weather", "christmas", "grenade", "point", "layer", "betaWave"
 ]
 
-const Loader = ({ type, preText, postText }) => (
+const Loader = ({ type, preText, postText, colors }) => (
 	<>
-		<Text>
+		<Text color={colors.primary}>
 			{preText && ` ${preText}`}
-			<Text color='green'>
+			<Text color={colors.secondary}>
 				<Spinner type={'dots'} />
 			</Text>
 			{postText && ` ${postText}`}
@@ -25,8 +25,8 @@ Loader.defaultProps = {
 	postText: 'Loading...'
 }
 
-const TextLoader = ({ text = 'Loading...' }) => (
-	<Text>
+const TextLoader = ({ text = 'Loading...', colors }) => (
+	<Text color={colors.secondary}>
 		{text}
 	</Text>
 )

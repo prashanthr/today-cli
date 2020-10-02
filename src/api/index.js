@@ -4,12 +4,14 @@ const { isProd, getEnv } = require('../util/env')
 const { CONFIG_FILE_NAME, getHomeFilePath, writeToFile, readFromFile } = require('../util/file')
 const { getLocationFromIp, getLocationFromTZ } = require('../util/location')
 const debug = require('../util/debug')
+const { getColorProperties } = require('../util/colors')
 
 const getUserName = () => getEnv('USER', 'Stranger')
 
 const initialState = {
 	name: getUserName(),
 	isLoading: true,
+	colors: {},
 	error: false
 }
 
@@ -59,9 +61,10 @@ const getResolvedFlags = async ({ inputFlags, defaultFlags, savedFlags }) => {
 }
 
 const getData = async ({ resolved, original }) => {
+	let resolvedParams = {}
 	try {
 		const configFilePath = getHomeFilePath(CONFIG_FILE_NAME)
-		const resolvedParams = omit(
+		resolvedParams = omit(
 			await getResolvedFlags({
 				inputFlags: resolved,
 				defaultFlags: mapValues({ ...original }, val => val.default),
@@ -79,6 +82,8 @@ const getData = async ({ resolved, original }) => {
 	} catch (err) {
 		debug('Error fetching data from source', err)
 		return {
+			...buildInitialState(resolvedParams),
+			colors: getColorProperties(resolvedParams),
 			isLoading: false,
 			error: true,
 			errorMessage: 'Oops. Unable to get data at this time :( Try again later!'
@@ -89,10 +94,11 @@ const getData = async ({ resolved, original }) => {
 const adaptDataForClient = ({ initData, data }) => {
 	const finalData = {
 		...buildInitialState(initData),
+		colors: getColorProperties(initData),
 		...data,
 		isLoading: false,
 		error: false,
-		qod: get(data, 'qod[0]', {}),
+		qod: get(data, 'qod[0]', {})
 	}
 	return finalData
 }

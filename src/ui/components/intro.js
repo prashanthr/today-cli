@@ -1,19 +1,19 @@
 'use strict'
 const React = require('react')
-const { Text, Newline, Static } = require('ink')
+const { Text, Newline } = require('ink')
 const { toHumanReadableDate } = require('../../util/datetime')
 const { capitalizeText } = require('../../util/text')
 
-const Intro = ({ name }) => (
+const Intro = ({ name, colors }) => (
 	<>
 		{name && (
 			<>
-				<Text>
-						Hello, <Text bold color='blue'>{capitalizeText(name)}</Text> 👋
+				<Text color={colors.primary}>
+						Hello, <Text bold color={colors.secondary}>{capitalizeText(name)}</Text> 👋
 						{'\n'}
 				</Text>
-				<Text color='white'>
-					Today is <Text bold color='blue'>{toHumanReadableDate(new Date())}</Text>
+				<Text color={colors.primary}>
+					Today is <Text bold color={colors.secondary}>{toHumanReadableDate(new Date())}</Text>
 				</Text>
 			</>
 		)}
@@ -21,15 +21,8 @@ const Intro = ({ name }) => (
 )
 
 Intro.defaultProps = {
-	name: 'Stranger'
+	name: 'Stranger',
+	colors: {}
 }
 
-const StaticIntro = ({ data }) => (
-	<Static items={[data]}>
-		{(item, idx) => (
-			<Intro key={idx} name={item.name} />
-		)}
-	</Static>
-)
-
-module.exports = StaticIntro
+module.exports = Intro
