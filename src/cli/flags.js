@@ -89,7 +89,7 @@ const flags = {
 	}
 }
 
-const IGNORE_FLAGS = ['reset', 'help', 'version']
+const IGNORE_FLAGS = ['reset', 'help', 'version', 'debug']
 const EXAMPLES = `
 		$ today --location='san francisco,usa'
 		$ today --weatherUnit='imperial'
