@@ -1,79 +1,106 @@
 const axios = require('axios')
-const { get } = require('lodash')
+const { get, isNil, omit, isEqual, isEmpty, omitBy, mapValues } = require('lodash')
 const { isProd, getEnv } = require('../util/env')
-const fs = require('fs')
+const { CONFIG_FILE_NAME, getHomeFilePath, writeToFile, readFromFile } = require('../util/file')
+const { getLocationFromIp, getLocationFromTZ } = require('../util/location')
+const debug = require('../util/debug')
+const { getColorProperties } = require('../util/colors')
 
-const weatherIconFolder = '/tmp/today'
-const weatherIconPath = `${weatherIconFolder}/weather.png`
+const getUserName = () => getEnv('USER', 'Stranger')
 
 const initialState = {
-	name: getEnv('USER', 'Stranger'),
-	isLoading: true
+	name: getUserName(),
+	isLoading: true,
+	colors: {},
+	error: false
 }
 
-const getDataUrl = (params = {}) => {
-	const { wod_unit = 'imperial', hod_limit = 3, nod_limit = 5 } = params
+const buildInitialState = (data) => {
+	return {
+		...data,
+		...initialState
+	}
+}
+
+const getDataUrl = (params) => {
+	const { weatherUnit, historyLimit, newsLimit, country, location } = params
 	const baseUrl = isProd()
 		? getEnv('TODAY_API_HOST')
 		: `http://${getEnv('TODAY_API_HOST')}:${getEnv('TODAY_API_PORT')}`
-	return `${baseUrl}/today?wod_unit=${wod_unit}&hod_limit=${hod_limit}&nod_limit=${nod_limit}`
+	return `${baseUrl}/today?location=${encodeURIComponent(location)}&country=${country}&wod_unit=${weatherUnit}&hod_limit=${historyLimit}&nod_limit=${newsLimit}`
 }
 
-const downloadFile = async (url, path) => {
-	const res = await axios({
-    method: 'get',
-    url,
-    responseType: 'stream'
-	})
-
-	// console.log('url', url, 'res', res)
-	const writer = fs.createWriteStream(path)
-	// await fs.promises.mkdir(weatherIconFolder)
-
-	res.data.pipe(writer)
-
-  return new Promise((resolve, reject) => {
-    writer.on('finish', resolve)
-    writer.on('error', reject)
-	})
-
-	// await res.data.pipe(
-	// 	fs.createWriteStream(path)
-	// )
-
-}
-
-const getData = async () => {
-	try {
-		const res = await axios.get(getDataUrl())
-		const weatherIcon = get(res.data, 'wod.weather[0].icon', undefined)
-		if (weatherIcon) {
-			await downloadFile(weatherIcon, weatherIconPath)
+const getResolvedFlags = async ({ inputFlags, defaultFlags, savedFlags }) => {
+	const ignoreSaved = inputFlags.reset || isNil(savedFlags) || isEmpty(savedFlags)
+	if (isEqual(inputFlags, defaultFlags)) {
+		if (ignoreSaved) {
+			return {
+				...inputFlags,
+				location: await getLocationFromIp() || inputFlags.location
+			}
+		} else {
+			return savedFlags
 		}
-		// console.log('res', res, res.data)
-		return adaptDataForClient(res.data)
-	} catch (err) {
-		console.error('Error fetching data', err)
-		return {}
+	} else {
+		if (ignoreSaved) {
+			return {
+				...inputFlags,
+				location: (
+					inputFlags.location === defaultFlags.location
+					? await getLocationFromIp()
+					: inputFlags.location
+				)
+			}
+		} else {
+			return {
+				...savedFlags,
+				...omitBy(inputFlags, (val, key) => defaultFlags[key] === val)
+			}
+		}
 	}
 }
 
-const adaptDataForClient = (data) => {
+const getData = async ({ resolved, original }) => {
+	let resolvedParams = {}
+	try {
+		const configFilePath = getHomeFilePath(CONFIG_FILE_NAME)
+		resolvedParams = omit(
+			await getResolvedFlags({
+				inputFlags: resolved,
+				defaultFlags: mapValues({ ...original }, val => val.default),
+				savedFlags: await readFromFile(
+					configFilePath,
+					true
+				)
+			}),
+			require('../cli/flags').IGNORE_FLAGS
+		)
+		debug('Using flags', resolvedParams)
+		const res = await axios.get(getDataUrl(resolvedParams))
+		await writeToFile(resolvedParams, configFilePath)
+		return adaptDataForClient({ initData: resolvedParams, data: res.data })
+	} catch (err) {
+		debug('Error fetching data from source', err)
+		return {
+			...buildInitialState(resolvedParams),
+			colors: getColorProperties(resolvedParams),
+			isLoading: false,
+			error: true,
+			errorMessage: 'Oops. Unable to get data at this time :( Try again later!'
+		}
+	}
+}
+
+const adaptDataForClient = ({ initData, data }) => {
 	const finalData = {
-		...initialState,
+		...buildInitialState(initData),
+		colors: getColorProperties(initData),
 		...data,
 		isLoading: false,
-		qod: get(data, 'qod[0]', {}),
-		wod: {
-			...data.wod,
-			weather: [{
-				...data.wod.weather[0],
-				icon: weatherIconPath
-			}]
-		}
+		error: false,
+		qod: get(data, 'qod[0]', {})
 	}
-	// console.log('finalData', JSON.stringify(finalData), finalData.wod.weather[0].icon)
 	return finalData
 }
 
-module.exports = { initialState, getData }
+module.exports = { buildInitialState, getData, getUserName }

@@ -1,5 +1,9 @@
 {
 	"name": "today",
+	"author": {
+		"name": "Prashanth R",
+		"url": "https://github.com/prashanthr"
+	},
 	"version": "0.0.0",
 	"license": "MIT",
 	"bin": "src/cli/index.js",

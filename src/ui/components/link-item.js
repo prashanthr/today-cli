@@ -2,19 +2,19 @@ const React = require('react')
 const { Text } = require('ink')
 const Link = require('ink-link')
 
-const LinkItem = ({ title, url, linkText }) => (
-	<React.Fragment>
-		<Text>
+const LinkItem = ({ title, url, linkText, colors }) => (
+	<>
+		<Text color={colors.primary}>
 			{title}&nbsp;
-			<Text>
+			<Text color={colors.primary}>
 				[
 					<Link url={url}>
-						<Text color='blue'>{linkText || 'Link'}</Text>
+						<Text color={colors.secondary}>{linkText || 'Link'}</Text>
 					</Link>
 				]
 			</Text>
 		</Text>
-	</React.Fragment>
+	</>
 )
 
 module.exports = LinkItem
