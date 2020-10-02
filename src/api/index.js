@@ -3,6 +3,7 @@ const { get, isNil, omit, isEqual, isEmpty, omitBy, mapValues } = require('lodas
 const { isProd, getEnv } = require('../util/env')
 const { CONFIG_FILE_NAME, getHomeFilePath, writeToFile, readFromFile } = require('../util/file')
 const { getLocationFromIp, getLocationFromTZ } = require('../util/location')
+const debug = require('../util/debug')
 
 const weatherIconFolder = '/tmp/today'
 const weatherIconPath = `${weatherIconFolder}/weather.png`
@@ -11,7 +12,8 @@ const getUserName = () => getEnv('USER', 'Stranger')
 
 const initialState = {
 	name: getUserName(),
-	isLoading: true
+	isLoading: true,
+	error: false
 }
 
 const buildInitialState = (data) => {
@@ -30,7 +32,6 @@ const getDataUrl = (params) => {
 }
 
 const getResolvedFlags = async ({ inputFlags, defaultFlags, savedFlags }) => {
-	// console.log('savedFlags', savedFlags, 'inputFlags', inputFlags, 'defaultFlags', defaultFlags)
 	const ignoreSaved = inputFlags.reset || isNil(savedFlags) || isEmpty(savedFlags)
 	if (isEqual(inputFlags, defaultFlags)) {
 		if (ignoreSaved) {
@@ -62,24 +63,29 @@ const getResolvedFlags = async ({ inputFlags, defaultFlags, savedFlags }) => {
 
 const getData = async ({ resolved, original }) => {
 	try {
+		const configFilePath = getHomeFilePath(CONFIG_FILE_NAME)
 		const resolvedParams = omit(
 			await getResolvedFlags({
 				inputFlags: resolved,
 				defaultFlags: mapValues({ ...original }, val => val.default),
 				savedFlags: await readFromFile(
-					getHomeFilePath(CONFIG_FILE_NAME),
+					configFilePath,
 					true
 				)
 			}),
 			require('../cli/flags').IGNORE_FLAGS
 		)
-		console.log('resolvedP', resolvedParams)
+		debug('Using flags', resolvedParams)
 		const res = await axios.get(getDataUrl(resolvedParams))
 		await writeToFile(resolvedParams, configFilePath)
 		return adaptDataForClient({ initData: resolvedParams, data: res.data })
 	} catch (err) {
-		console.error('Error fetching data from source', err)
-		return {}
+		debug('Error fetching data from source', err)
+		return {
+			isLoading: false,
+			error: true,
+			errorMessage: 'Oops. Unable to get data at this time :( Try again later!'
+		}
 	}
 }
 
@@ -88,6 +94,7 @@ const adaptDataForClient = ({ initData, data }) => {
 		...buildInitialState(initData),
 		...data,
 		isLoading: false,
+		error: false,
 		qod: get(data, 'qod[0]', {}),
 		wod: {
 			...data.wod,

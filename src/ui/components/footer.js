@@ -7,14 +7,14 @@ const { author } = require('../../../package.json')
 
 const Attribution = ({ sources }) => (
 	<Text>
-		Made with 💙 by <Link url={author.url}>{author.name}</Link>.
-		{'\n'}
 		{sources.map(({ type, name, url }, index) => (
 			<Text key={index}>
 				{type} from <Link url={url}><Text color='blue'>{name}</Text></Link>
 				{index !== sources.length - 1 && <>,&nbsp;</>}
 			</Text>
 		))}
+		{'\n'}
+		Made with 💙 by <Link url={author.url}>{author.name}</Link>.
 	</Text>
 )
 

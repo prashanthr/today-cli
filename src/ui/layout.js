@@ -9,6 +9,7 @@ const News = importJsx('./components/news')
 const History = importJsx('./components/history')
 const Loader = importJsx('./components/loader')
 const Footer = importJsx('./components/footer')
+const Error = importJsx('./components/error')
 
 const Layout = ({ data }) => {
 	const { qod, name } = data
@@ -19,6 +20,7 @@ const Layout = ({ data }) => {
 		...(data.showNews ? [<News data={data.nod} />] : []),
 		...(data.showHistory ? [<History data={data.hod} />] : []),
 		...(data.showQuote ? [<Quote data={data.qod} />] : []),
+		...(!data.isLoading && data.error ? [<Error message={data.errorMessage} />] : []),
 		...(data.isLoading ? [] : [<Footer />])
 	]
 	return (

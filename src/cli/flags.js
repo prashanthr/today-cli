@@ -1,5 +1,6 @@
 const { getUserName } = require('../api')
 const { getCountry, getLocationFromTZ } = require('../util/location')
+const { getEnv } = require('../util/env')
 
 const flags = {
 	name: {
@@ -78,6 +79,13 @@ const flags = {
 		default: false,
 		isRequired: false,
 		helpText: `--reset | --r [default: false] -- Removes any saved settings and uses defaults`
+	},
+	debug: {
+		type: 'boolean',
+		alias: 'd',
+		default: getEnv('TODAY_DEBUG', 'false') === 'true',
+		isRequired: false,
+		helpText: `--debug | --d [default: false] -- Logs to the console`
 	}
 }
 
