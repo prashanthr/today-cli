@@ -20,4 +20,4 @@ const cli = meow(`
 		${EXAMPLES}
 `, { flags })
 
-render(React.createElement(ui, cli.flags))
+render(React.createElement(ui, { resolved: cli.flags, original: flags } ))
