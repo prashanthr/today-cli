@@ -5,9 +5,6 @@ const { CONFIG_FILE_NAME, getHomeFilePath, writeToFile, readFromFile } = require
 const { getLocationFromIp, getLocationFromTZ } = require('../util/location')
 const debug = require('../util/debug')
 
-const weatherIconFolder = '/tmp/today'
-const weatherIconPath = `${weatherIconFolder}/weather.png`
-
 const getUserName = () => getEnv('USER', 'Stranger')
 
 const initialState = {
@@ -96,13 +93,6 @@ const adaptDataForClient = ({ initData, data }) => {
 		isLoading: false,
 		error: false,
 		qod: get(data, 'qod[0]', {}),
-		wod: {
-			...data.wod,
-			weather: [{
-				...data.wod.weather[0],
-				icon: weatherIconPath
-			}]
-		}
 	}
 	return finalData
 }
