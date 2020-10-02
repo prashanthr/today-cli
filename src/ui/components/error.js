@@ -1,9 +1,9 @@
 const React = require('react')
 const { Text } = require('ink')
 
-const Error = ({ message }) => (
+const Error = ({ message, colors }) => (
 	<>
-		<Text	color='red' inverse>
+		<Text	color={colors.error} inverse>
 			{message}
 		</Text>
 	</>
