@@ -26,7 +26,7 @@ Loader.defaultProps = {
 }
 
 const TextLoader = ({ text = 'Loading...', colors }) => (
-	<Text color={colors.secondary}>
+	<Text color={colors.tertiary}>
 		{text}
 	</Text>
 )
