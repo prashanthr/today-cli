@@ -1,8 +1,8 @@
 const React = require('react')
 const { Text } = require('ink')
 
-const Heading = ({ text }) => (
-	<Text bold underline>
+const Heading = ({ text, colors }) => (
+	<Text color={colors.primary} bold underline>
 		{text}
 	</Text>
 )

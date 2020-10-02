@@ -4,30 +4,31 @@ const { getHomeFilePath, CONFIG_FILE_NAME } = require('../../util/file')
 const Link = require('ink-link')
 const CONSTANTS = require('../../constants')
 const { author } = require('../../../package.json')
+const colors = require('../../util/colors')
 
-const Attribution = ({ sources }) => (
-	<Text>
-		Made with 💙 by <Link url={author.url}>{author.name}</Link>.
-		{'\n'}
+const Attribution = ({ sources, colors }) => (
+	<Text color={colors.primary}>
 		{sources.map(({ type, name, url }, index) => (
-			<Text key={index}>
-				{type} from <Link url={url}><Text color='blue'>{name}</Text></Link>
+			<Text color={colors.primary} key={index}>
+				{type} from <Link url={url}><Text color={colors.secondary}>{name}</Text></Link>
 				{index !== sources.length - 1 && <>,&nbsp;</>}
 			</Text>
 		))}
+		{'\n'}
+		Made with 💙 by <Link url={author.url}>{author.name}</Link>.
 	</Text>
 )
 
-const ConfigNotice = () => (
-	<Text>
-		Note: You can view/edit your settings at <Text color='blue'>{getHomeFilePath(CONFIG_FILE_NAME)}</Text>
+const ConfigNotice = ({ colors }) => (
+	<Text color={colors.primary}>
+		Note: You can view/edit your settings at <Text color={colors.secondary}>{getHomeFilePath(CONFIG_FILE_NAME)}</Text>
 	</Text>
 )
 
-const Footer = () => (
+const Footer = ({ colors }) => (
 	<>
-		<ConfigNotice />
-		<Attribution sources={CONSTANTS.attribution} />
+		<ConfigNotice colors={colors} />
+		<Attribution sources={CONSTANTS.attribution} colors={colors} />
 	</>
 )
 

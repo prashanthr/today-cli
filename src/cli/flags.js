@@ -1,5 +1,6 @@
 const { getUserName } = require('../api')
 const { getCountry, getLocationFromTZ } = require('../util/location')
+const { getEnv } = require('../util/env')
 
 const flags = {
 	name: {
@@ -78,14 +79,51 @@ const flags = {
 		default: false,
 		isRequired: false,
 		helpText: `--reset | --r [default: false] -- Removes any saved settings and uses defaults`
+	},
+	debug: {
+		type: 'boolean',
+		alias: 'd',
+		default: getEnv('TODAY_DEBUG', 'false') === 'true',
+		isRequired: false,
+		helpText: `--debug | --d [default: false] -- Logs to the console`
+	},
+	colorPrimary: {
+		type: 'string',
+		alias: 'cp',
+		default: 'white',
+		isRequired: false,
+		helpText: `--colorPrimary | --cp [default: 'white'] -- Sets the primary color (hex or valid chalk color name. See https://github.com/chalk/chalk#colors)`
+	},
+	colorSecondary: {
+		type: 'string',
+		alias: 'cs',
+		default: 'blue',
+		isRequired: false,
+		helpText: `--colorSecondary | --cs [default: 'blue'] -- Sets the secondary color (hex or valid chalk color name. See https://github.com/chalk/chalk#colors)`
+	},
+	colorTertiary: {
+		type: 'string',
+		alias: 'ct',
+		default: 'green',
+		isRequired: false,
+		helpText: `--colorTertiary | --ct [default: 'green'] -- Sets the tertiary color (hex or valid chalk color name. See https://github.com/chalk/chalk#colors)`
+	},
+	colorError: {
+		type: 'string',
+		alias: 'ce',
+		default: 'red',
+		isRequired: false,
+		helpText: `--colorError | --ce [default: 'red'] -- Sets the error color (hex or valid chalk color name. See https://github.com/chalk/chalk#colors)`
 	}
 }
 
-const IGNORE_FLAGS = ['reset', 'help', 'version']
+const IGNORE_FLAGS = ['reset', 'help', 'version', 'debug']
 const EXAMPLES = `
-		$ today --location='san francisco,usa'
-		$ today --weatherUnit='imperial'
+		$ today --location="san francisco,usa"
+		$ today --weatherUnit="imperial"
+		$ today --country="uk"
 		$ today --newsLimit=10 --historyLimit=5
+		$ today --colorSecondary="cyan"
 		$ today --reset
 `
 

@@ -1,5 +1,6 @@
 const { getTimeZone } = require('./datetime')
 const axios = require('axios')
+const debug = require('./debug')
 
 const getCityFromTZ = () => {
 	const tz = getTimeZone().toLowerCase()
@@ -15,7 +16,7 @@ const getCityFromIp = async () => {
 		const res = await axios.get('https://ipinfo.io')
 		city = res.data.city.toLowerCase()
 	} catch (err) {
-		// console.log('Error getting ip address', err)
+		debug('Error getting ip address', err)
 	} finally {
 		return city
 	}
