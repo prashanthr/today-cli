@@ -4,7 +4,7 @@
 		"name": "Prashanth R",
 		"url": "https://github.com/prashanthr"
 	},
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"license": "MIT",
 	"bin": {
 		"today": "src/cli/index.js"
