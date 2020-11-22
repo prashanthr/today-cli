@@ -1,8 +1,11 @@
 # today
 
-Welcome ton today. A unique experience for the current day.
+Welcome to today. A unique experience for the current day.
 
 ![demo](./assets/today-cli.gif)
+
+Created using [terminalizer][https://github.com/faressoft/terminalizer]
+
 [View schreenshot](./assets/today-cli.png)
 
 ## Install
