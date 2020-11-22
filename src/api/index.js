@@ -25,11 +25,12 @@ const buildInitialState = (data) => {
 
 const getDataUrl = (params) => {
 	const { weatherUnit, historyLimit, newsLimit, country, location } = params
-	const host = getEnv('TODAY_API_HOST', CONSTANTS.todayApiBaseUrl)
-	const port = getEnv('TODAY_API_PORT')
+	const customHost = getEnv('TODAY_API_HOST', 'localhost')
+	const customPort = getEnv('TODAY_API_PORT', 8088)
+	debug(`Today env dev: ${isLocalDevMode()}`)
 	const baseUrl = !isLocalDevMode()
-		? host
-		: `http://${host}:${port}`
+		? CONSTANTS.todayApiBaseUrl
+		: `http://${customHost}:${customPort}`
 	return `${baseUrl}/today?location=${encodeURIComponent(location)}&country=${country}&wod_unit=${weatherUnit}&hod_limit=${historyLimit}&nod_limit=${newsLimit}`
 }
 
