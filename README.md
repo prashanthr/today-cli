@@ -4,9 +4,9 @@ Welcome to today. A unique experience for the current day.
 
 ![demo](./assets/today-cli.gif)
 
-Created using [terminalizer][https://github.com/faressoft/terminalizer]
+Created using [terminalizer](https://github.com/faressoft/terminalizer)
 
-[View schreenshot](./assets/today-cli.png)
+[View screenshot](./assets/today-cli.png)
 
 ## Install
 
@@ -15,7 +15,7 @@ $ npm install --global @universal-apps/today
 ```
 
 
-## CLI
+## CLI usage
 
 ```
 $ today --help
