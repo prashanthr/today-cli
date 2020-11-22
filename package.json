@@ -21,9 +21,10 @@
 		"save-release": "git push --follow-tags origin master",
 		"takeoff": "npm run release && npm run save-release && npm publish"
 	},
-	"files": [
-		"src/**.*"
-	],
+	"files": [ "src/*" ],
+	"publishConfig": {
+    "access": "public"
+  },
 	"dependencies": {
 		"axios": "^0.20.0",
 		"import-jsx": "^4.0.0",
