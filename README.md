@@ -1,5 +1,7 @@
 # today
 
+![logo](./assets/logo-black.svg)
+
 Welcome to today. A unique experience for the current day.
 
 ![demo](./assets/today-cli.gif)
