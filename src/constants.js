@@ -1,4 +1,5 @@
 const CONSTANTS = {
+	todayApiBaseUrl: "https://today-api.universal-apps.xyz",
 	coffeeUrl: "https://www.buymeacoffee.com/TGuwXOA",
 	attribution: [{
 		type: 'Quote',

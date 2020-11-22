@@ -1,10 +1,11 @@
 const axios = require('axios')
 const { get, isNil, omit, isEqual, isEmpty, omitBy, mapValues } = require('lodash')
-const { isProd, getEnv } = require('../util/env')
+const { getEnv, isLocalDevMode } = require('../util/env')
 const { CONFIG_FILE_NAME, getHomeFilePath, writeToFile, readFromFile } = require('../util/file')
 const { getLocationFromIp, getLocationFromTZ } = require('../util/location')
 const debug = require('../util/debug')
 const { getColorProperties } = require('../util/colors')
+const CONSTANTS = require('../constants')
 
 const getUserName = () => getEnv('USER', 'Stranger')
 
@@ -24,9 +25,11 @@ const buildInitialState = (data) => {
 
 const getDataUrl = (params) => {
 	const { weatherUnit, historyLimit, newsLimit, country, location } = params
-	const baseUrl = isProd()
-		? getEnv('TODAY_API_HOST')
-		: `http://${getEnv('TODAY_API_HOST')}:${getEnv('TODAY_API_PORT')}`
+	const host = getEnv('TODAY_API_HOST', CONSTANTS.todayApiBaseUrl)
+	const port = getEnv('TODAY_API_PORT')
+	const baseUrl = !isLocalDevMode()
+		? host
+		: `http://${host}:${port}`
 	return `${baseUrl}/today?location=${encodeURIComponent(location)}&country=${country}&wod_unit=${weatherUnit}&hod_limit=${historyLimit}&nod_limit=${newsLimit}`
 }
 
