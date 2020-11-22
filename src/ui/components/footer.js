@@ -15,7 +15,7 @@ const Attribution = ({ sources, colors }) => (
 			</Text>
 		))}
 		{'\n'}
-		Made with 💙 by <Link url={author.url}>{author.name}</Link>.
+		Made with 💙 by <Link url={author.url}>{author.name}</Link>. Liked it? <Link url={CONSTANTS.coffeeUrl}>Buy me a coffee</Link>
 	</Text>
 )
 

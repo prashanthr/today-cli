@@ -1,4 +1,5 @@
 const CONSTANTS = {
+	coffeeUrl: "https://www.buymeacoffee.com/TGuwXOA",
 	attribution: [{
 		type: 'Quote',
 		url: 'https://theysaidso.com',

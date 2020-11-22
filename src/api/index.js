@@ -17,8 +17,8 @@ const initialState = {
 
 const buildInitialState = (data) => {
 	return {
-		...data,
-		...initialState
+		...initialState,
+		...data
 	}
 }
 
