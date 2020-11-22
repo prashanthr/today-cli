@@ -17,7 +17,7 @@
 		"test": "xo && ava",
 		"release": "standard-version",
 		"save-release": "git push --follow-tags origin master",
-		"takeoff": "npx release && npx save-release && npx publish"
+		"takeoff": "npm run release && npm run save-release && npm publish"
 	},
 	"files": [
 		"cli.js",
