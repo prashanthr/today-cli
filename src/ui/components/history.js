@@ -7,6 +7,8 @@ const { toHumanReadableDate } = require('../../util/datetime')
 const { capitalizeText } = require('../../util/text')
 const LinkItem = require('./link-item')
 
+const isDataValid = (data) => data && (data.date !== null && data.url !== null)
+
 const HistoryItems = ({ items, title, colors }) => {
 	return (
 		<>
@@ -28,7 +30,7 @@ const HistoryItems = ({ items, title, colors }) => {
 const History = ({ data, colors }) => {
 	return (
 		<>
-			{data && (
+			{isDataValid(data) && (
 				<>
 					<LinkItem colors={colors} title={<Heading colors={colors} text={'On this day'} />} url={data.url} />
 					<HistoryItems items={data.data.Events} title={'Events'} colors={colors} />
