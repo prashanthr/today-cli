@@ -5,6 +5,7 @@ const Link = require('ink-link')
 const CONSTANTS = require('../../constants')
 const { author } = require('../../../package.json')
 const colors = require('../../util/colors')
+const { RESET_CMD } = require('../../cli/flags')
 
 const Attribution = ({ sources, colors }) => (
 	<Text color={colors.primary}>
@@ -21,14 +22,17 @@ const Attribution = ({ sources, colors }) => (
 
 const ConfigNotice = ({ colors }) => (
 	<Text color={colors.primary}>
+		{'\n'}
 		Note: You can view/edit your settings at <Text color={colors.secondary}>{getHomeFilePath(CONFIG_FILE_NAME)}</Text>
+		{'\n'}
+		Messed up your settings? Try running <Text color={colors.secondary}>{RESET_CMD}</Text>
 	</Text>
 )
 
 const Footer = ({ colors }) => (
 	<>
-		<ConfigNotice colors={colors} />
 		<Attribution sources={CONSTANTS.attribution} colors={colors} />
+		<ConfigNotice colors={colors} />
 	</>
 )
 
