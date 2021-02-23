@@ -20,7 +20,7 @@ const Layout = ({ data }) => {
 		...(!data.isLoading && data.showWeather ? [<Weather data={data.wod} colors={data.colors} />] : []),
 		...(!data.isLoading && data.showNews ? [<News data={data.nod} colors={data.colors} />] : []),
 		...(!data.isLoading && data.showHistory ? [<History data={data.hod} colors={data.colors} />] : []),
-		...(!data.isLoading && data.showHistory ? [<Song data={data.sod} colors={data.colors} />] : []),
+		...(!data.isLoading && data.showSong ? [<Song data={data.sod} colors={data.colors} />] : []),
 		...(!data.isLoading && data.showQuote ? [<Quote data={data.qod} colors={data.colors} />] : []),
 		...(!data.isLoading ? [<Footer colors={data.colors} />] : [])
 	]

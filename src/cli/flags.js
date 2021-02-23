@@ -52,6 +52,13 @@ const flags = {
 		isRequired: false,
 		helpText: `--q | --showQuote [default: true] -- Controls display of quote`
 	},
+	showSong: {
+		type: 'boolean',
+		alias: 's',
+		default: true,
+		isRequired: false,
+		helpText: `--s | --showSong [default: true] -- Controls display of song`
+	},
 	weatherUnit: {
 		type: 'string',
 		alias: 'wu',
