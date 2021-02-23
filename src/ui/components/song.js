@@ -34,8 +34,8 @@ Song.propTypes = {
 	data: PropTypes.shape({
 		artist_name: PropTypes.string,
 		track_name: PropTypes.string,
-    uri: PropTypes.string,
-    source: PropTypes.string
+		uri: PropTypes.string,
+		source: PropTypes.string
 	})
 }
 
