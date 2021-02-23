@@ -10,6 +10,7 @@ const History = importJsx('./components/history')
 const Loader = importJsx('./components/loader')
 const Footer = importJsx('./components/footer')
 const Error = importJsx('./components/error')
+const Song = importJsx('./components/song')
 
 const Layout = ({ data }) => {
 	const components = [
@@ -19,6 +20,7 @@ const Layout = ({ data }) => {
 		...(!data.isLoading && data.showWeather ? [<Weather data={data.wod} colors={data.colors} />] : []),
 		...(!data.isLoading && data.showNews ? [<News data={data.nod} colors={data.colors} />] : []),
 		...(!data.isLoading && data.showHistory ? [<History data={data.hod} colors={data.colors} />] : []),
+		...(!data.isLoading && data.showSong ? [<Song data={data.sod} colors={data.colors} />] : []),
 		...(!data.isLoading && data.showQuote ? [<Quote data={data.qod} colors={data.colors} />] : []),
 		...(!data.isLoading ? [<Footer colors={data.colors} />] : [])
 	]

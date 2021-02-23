@@ -52,6 +52,13 @@ const flags = {
 		isRequired: false,
 		helpText: `--q | --showQuote [default: true] -- Controls display of quote`
 	},
+	showSong: {
+		type: 'boolean',
+		alias: 's',
+		default: true,
+		isRequired: false,
+		helpText: `--s | --showSong [default: true] -- Controls display of song`
+	},
 	weatherUnit: {
 		type: 'string',
 		alias: 'wu',
@@ -118,13 +125,14 @@ const flags = {
 }
 
 const IGNORE_FLAGS = ['reset', 'help', 'version', 'debug']
+const RESET_CMD = 'today --reset'
 const EXAMPLES = `
 		$ today --location="san francisco,usa"
 		$ today --weatherUnit="imperial"
 		$ today --country="uk"
 		$ today --newsLimit=10 --historyLimit=5
 		$ today --colorSecondary="cyan"
-		$ today --reset
+		$ ${RESET_CMD}
 `
 
-module.exports = { flags, IGNORE_FLAGS, EXAMPLES }
+module.exports = { flags, IGNORE_FLAGS, EXAMPLES, RESET_CMD }

@@ -10,6 +10,18 @@ Created using [terminalizer](https://github.com/faressoft/terminalizer)
 
 [View screenshot](./assets/today-cli.png)
 
+### Also available on the [web](https://today.universal-apps.xyz)
+
+## Description
+
+At a glance
+
+- Weather forecast ☀️
+- Top headlines 🗞
+- Historical notes 🎓
+- Daily inspirational quote ✨
+- Song of the day 🎧
+
 ## Install
 
 ```bash
@@ -33,6 +45,7 @@ $ today --help
 	--news | --showNews [default: true] -- Controls display of news articles
 	--h | --showHistory [default: true] -- Controls display of history table
 	--q | --showQuote [default: true] -- Controls display of quote
+	--s | --showSong [default: true] -- Controls display of song
 	--wu | --weatherUnit [default: imperial, valid: metric,standard,imperial] -- Controls the weather units
 	--hlimit | --historyLimit [default: 3] -- Controls the number of historical datapoints shown
 	--nlimit | --newsLimit [default: 5] -- Controls the number of news articles shown
