@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/prashanthr/today-cli/compare/v1.1.8...v1.2.0) (2021-02-23)
+
+
+### Features
+
+* **song-of-the-day:** Add song of the day [ch248] ([#9](https://github.com/prashanthr/today-cli/issues/9)) ([2148d83](https://github.com/prashanthr/today-cli/commit/2148d83c7b2d5a4d9fdc181094c58970d1675121))
+
 ### [1.1.8](https://github.com/prashanthr/today-cli/compare/v1.1.7...v1.1.8) (2021-01-26)
 
 ### [1.1.7](https://github.com/prashanthr/today-cli/compare/v1.1.6...v1.1.7) (2020-11-22)
