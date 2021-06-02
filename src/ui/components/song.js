@@ -8,9 +8,20 @@ const Heading = importJsx('./heading')
 const LinkItem = importJsx('./link-item')
 const { capitalizeText } = require('../../util/text')
 
+/**
+ * @param {*} data {
+        "artist_name": null,
+        "source": null,
+        "track_name": null,
+        "uri": null
+    }
+ * @returns boolean
+ */
+const isDataValid = (data) => data && data.uri
+
 const Song = ({ data, colors }) => (
 	<>
-		{data && (
+		{isDataValid(data) && (
 			<>
 				<Heading text={`Song of the day`} colors={colors} />
 				<LinkItem
