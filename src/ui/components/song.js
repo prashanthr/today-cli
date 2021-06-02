@@ -7,6 +7,7 @@ const Link = require('ink-link')
 const Heading = importJsx('./heading')
 const LinkItem = importJsx('./link-item')
 const { capitalizeText } = require('../../util/text')
+const { filter } = require('lodash')
 
 /**
  * @param {*} data {
@@ -17,7 +18,7 @@ const { capitalizeText } = require('../../util/text')
     }
  * @returns boolean
  */
-const isDataValid = (data) => data && data.uri
+const isDataValid = (data) => data && (data.uri && data.artist_name && data.track_name)
 
 const Song = ({ data, colors }) => (
 	<>
