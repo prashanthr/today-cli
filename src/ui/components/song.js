@@ -7,7 +7,6 @@ const Link = require('ink-link')
 const Heading = importJsx('./heading')
 const LinkItem = importJsx('./link-item')
 const { capitalizeText } = require('../../util/text')
-const { filter } = require('lodash')
 
 /**
  * @param {*} data {
